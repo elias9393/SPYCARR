@@ -760,7 +760,7 @@ footer{border-top:1px solid var(--g200);padding:36px 52px}
   .stats-numbers{grid-template-columns:1fr}
   .stats-why{grid-template-columns:1fr}
 }
-.carousel-wrap{position:relative;display:flex;align-items:center;gap:12px;margin-top:40px;max-width:900px;margin-left:auto;margin-right:auto}
+.carousel-wrap{position:relative;display:flex;align-items:center;gap:12px;margin-top:40px;padding:0 52px}
 .car-track-wrap{overflow:hidden;border-radius:18px;flex:1}
 .car-track{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
 .car-slide{min-width:100%;aspect-ratio:16/9;background:var(--g100)}
@@ -1431,7 +1431,8 @@ src="https://www.facebook.com/tr?id=1492679082201254&ev=PageView&noscript=1"
   <div class="wrap">
     <div class="overline">Nos réalisations</div>
     <h2 class="h2">Un aperçu de nos installations</h2>
-    <div class="carousel-wrap">
+  </div>
+  <div class="carousel-wrap">
       <button class="car-btn car-prev" onclick="carMove(-1)" aria-label="Précédent">&#8592;</button>
       <div class="car-track-wrap">
         <div class="car-track" id="carTrack">
@@ -1444,14 +1445,14 @@ src="https://www.facebook.com/tr?id=1492679082201254&ev=PageView&noscript=1"
       </div>
       <button class="car-btn car-next" onclick="carMove(1)" aria-label="Suivant">&#8594;</button>
     </div>
-    <div class="car-dots" id="carDots">
+  </div>
+  <div class="car-dots" id="carDots">
       <span class="car-dot active" onclick="carGo(0)"></span>
       <span class="car-dot" onclick="carGo(1)"></span>
       <span class="car-dot" onclick="carGo(2)"></span>
       <span class="car-dot" onclick="carGo(3)"></span>
       <span class="car-dot" onclick="carGo(4)"></span>
     </div>
-  </div>
 </section>
 
 <!-- ═══ ZONE ═══ -->
