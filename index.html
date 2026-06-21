@@ -761,11 +761,15 @@ footer{border-top:1px solid var(--g200);padding:36px 52px}
   .stats-why{grid-template-columns:1fr}
 }
 .carousel-wrap{position:relative;display:flex;align-items:center;gap:12px;margin-top:40px;padding:0}
-.car-track-wrap{overflow:hidden;border-radius:18px;flex:1}
-.car-track{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
-.car-slide{min-width:100%;height:750px;background:var(--g100)}
-.car-slide img{width:100%;height:750px;object-fit:cover;border-radius:18px;display:block}
-@media(max-width:768px){.car-slide,.car-slide img{height:320px}}
+.car-track-wrap{overflow:hidden;flex:1}
+.car-track{display:flex;gap:12px;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.car-slide{min-width:calc(33.333% - 8px);height:520px;background:var(--g100);flex-shrink:0}
+.car-slide img{width:100%;height:520px;object-fit:cover;border-radius:14px;display:block}
+@media(max-width:768px){
+  .car-slide{min-width:100%;height:320px}
+  .car-slide img{height:320px;border-radius:0}
+  .car-track{gap:0}
+}
 .car-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--g200);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;color:var(--black)}
 .car-btn:hover{background:var(--black);color:#fff;border-color:var(--black)}
 .car-dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
@@ -1617,14 +1621,26 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <script>
 (function(){
-  var cur=0,total=4;
+  var cur=0,total=5;
+  function slideW(){
+    var isMobile=window.innerWidth<=768;
+    return isMobile?100:(100/3+8/document.querySelector('.car-track-wrap').offsetWidth*100);
+  }
   function update(){
-    document.getElementById('carTrack').style.transform='translateX(-'+cur*100+'%)';
+    var track=document.getElementById('carTrack');
+    var isMobile=window.innerWidth<=768;
+    if(isMobile){
+      track.style.transform='translateX(-'+cur*100+'%)';
+    } else {
+      var w=document.querySelector('.car-slide').offsetWidth+12;
+      track.style.transform='translateX(-'+(cur*w)+'px)';
+    }
     document.querySelectorAll('.car-dot').forEach(function(d,i){d.classList.toggle('active',i===cur)});
   }
-  total=5;
-  window.carMove=function(dir){cur=(cur+dir+total)%total;update()};
-  window.carGo=function(i){cur=i;update()};
+  var maxSlide=function(){return window.innerWidth<=768?total-1:total-3};
+  window.carMove=function(dir){cur=Math.max(0,Math.min(cur+dir,maxSlide()));update()};
+  window.carGo=function(i){cur=Math.min(i,maxSlide());update()};
+  window.addEventListener('resize',function(){cur=Math.min(cur,maxSlide());update()});
 })();
 </script>
 </body>
