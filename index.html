@@ -760,6 +760,17 @@ footer{border-top:1px solid var(--g200);padding:36px 52px}
   .stats-numbers{grid-template-columns:1fr}
   .stats-why{grid-template-columns:1fr}
 }
+.carousel-wrap{position:relative;display:flex;align-items:center;gap:12px;margin-top:40px}
+.car-track-wrap{overflow:hidden;border-radius:18px;flex:1}
+.car-track{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.car-slide{min-width:100%;aspect-ratio:4/3;background:var(--g100)}
+.car-slide img{width:100%;height:100%;object-fit:cover;border-radius:18px;display:block}
+.car-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--g200);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;color:var(--black)}
+.car-btn:hover{background:var(--black);color:#fff;border-color:var(--black)}
+.car-dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.car-dot{width:8px;height:8px;border-radius:50%;background:var(--g300);cursor:pointer;transition:background .2s,transform .2s}
+.car-dot.active{background:var(--black);transform:scale(1.2)}
+@media(max-width:768px){.car-btn{width:36px;height:36px;font-size:14px}}
 </style>
 <script>
     (function (c, s, q, u, a, r, e) {
@@ -1415,6 +1426,34 @@ src="https://www.facebook.com/tr?id=1492679082201254&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- ═══ RÉALISATIONS ═══ -->
+<section class="sec sec-alt" id="realisations">
+  <div class="wrap">
+    <div class="overline">Nos réalisations</div>
+    <h2 class="h2">Un aperçu de nos installations</h2>
+    <div class="carousel-wrap">
+      <button class="car-btn car-prev" onclick="carMove(-1)" aria-label="Précédent">&#8592;</button>
+      <div class="car-track-wrap">
+        <div class="car-track" id="carTrack">
+          <div class="car-slide"><img src="/images/real-1.jpg" alt="Installation traceur GPS Mini Cooper" loading="lazy"></div>
+          <div class="car-slide"><img src="/images/real-2.jpg" alt="Installation traceur GPS Mini Cooper intérieur" loading="lazy"></div>
+          <div class="car-slide"><img src="/images/real-3.jpg" alt="Installation traceur GPS Renault Kangoo" loading="lazy"></div>
+          <div class="car-slide"><img src="/images/real-4.jpg" alt="Installation traceur GPS Toyota Auris" loading="lazy"></div>
+          <div class="car-slide"><img src="/images/real-5.jpg" alt="Installation traceur GPS véhicule" loading="lazy"></div>
+        </div>
+      </div>
+      <button class="car-btn car-next" onclick="carMove(1)" aria-label="Suivant">&#8594;</button>
+    </div>
+    <div class="car-dots" id="carDots">
+      <span class="car-dot active" onclick="carGo(0)"></span>
+      <span class="car-dot" onclick="carGo(1)"></span>
+      <span class="car-dot" onclick="carGo(2)"></span>
+      <span class="car-dot" onclick="carGo(3)"></span>
+      <span class="car-dot" onclick="carGo(4)"></span>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ ZONE ═══ -->
 <section class="sec sec-alt" id="zone">
   <div class="wrap">
@@ -1573,6 +1612,18 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+</script>
+<script>
+(function(){
+  var cur=0,total=4;
+  function update(){
+    document.getElementById('carTrack').style.transform='translateX(-'+cur*100+'%)';
+    document.querySelectorAll('.car-dot').forEach(function(d,i){d.classList.toggle('active',i===cur)});
+  }
+  total=5;
+  window.carMove=function(dir){cur=(cur+dir+total)%total;update()};
+  window.carGo=function(i){cur=i;update()};
+})();
 </script>
 </body>
 </html>
